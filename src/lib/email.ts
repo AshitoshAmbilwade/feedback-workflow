@@ -9,7 +9,7 @@ export async function sendFeedbackRequestEmail(
 ) {
   try {
     const { data, error } = await resend.emails.send({
-      from: 'Feedback System <onboarding@resend.dev>',
+      from: 'Feedback System <feedback@yourdomain.com>',
       to: clientEmail,
       subject: 'Feedback Request',
       html: `
