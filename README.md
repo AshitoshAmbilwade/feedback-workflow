@@ -18,7 +18,7 @@ Hosted on **Vercel**.
 
 - **Framework:** Next.js 14 (App Router)
 - **Database:** MongoDB (via Mongoose)
-- **Email Service:** EmailJS
+- **Email Service:** EmailJS  I am using free version so for that two account needed
 - **UI Components:** shadcn/ui + Tailwind CSS
 - **Hosting:** Vercel
 
