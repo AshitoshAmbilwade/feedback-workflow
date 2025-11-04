@@ -1,59 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
+import { NextResponse } from 'next/server';
+import connectDB  from '@/lib/mongodb';
 import FeedbackRequest from '@/models/FeedbackRequest.model';
-import User from '@/models/User.model';
-import { sendHRNotificationEmail, sendThankYouEmail } from '@/lib/email';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: Request) {
   try {
     await connectDB();
+    const { token, feedback, rating } = await req.json();
 
-    const { token, feedback, rating } = await request.json();
-
-    // Find feedback request
-    const feedbackRequest = await FeedbackRequest.findOne({ token })
-      .populate('hrUserId');
-
+    const feedbackRequest = await FeedbackRequest.findOne({ token });
     if (!feedbackRequest) {
-      return NextResponse.json(
-        { error: 'Invalid feedback request' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Invalid token' }, { status: 404 });
     }
 
-    if (feedbackRequest.status === 'submitted') {
-      return NextResponse.json(
-        { error: 'Feedback already submitted' },
-        { status: 400 }
-      );
-    }
-
-    // Update feedback request
     feedbackRequest.status = 'submitted';
     feedbackRequest.submittedAt = new Date();
-    feedbackRequest.feedback = feedback;
-    feedbackRequest.rating = rating;
-    
     await feedbackRequest.save();
-
-    // Send notifications
-    const hrUser = await User.findById(feedbackRequest.hrUserId);
-    
-    if (hrUser) {
-      await sendHRNotificationEmail(hrUser.email, feedbackRequest.clientName);
-    }
-    
-    await sendThankYouEmail(feedbackRequest.clientEmail, feedbackRequest.clientName);
 
     return NextResponse.json({
       success: true,
-      message: 'Feedback submitted successfully',
+      clientEmail: feedbackRequest.clientEmail,
+      clientName: feedbackRequest.clientName,
+      hrEmail: feedbackRequest.hrEmail,
+      hrName: feedbackRequest.hrName,
     });
   } catch (error) {
-    console.error('Error submitting feedback:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error('❌ Error in /feedback/submit:', error);
+    return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
   }
 }
