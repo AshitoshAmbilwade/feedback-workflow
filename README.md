@@ -1,36 +1,153 @@
+# 📝 Feedback Workflow System
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+A full-stack feedback management system that enables HR users to send feedback requests and clients to securely submit responses via unique email links.
 
-First, run the development server:
+---
+
+## 🚀 Deployment
+
+🔗 **Live Demo:** [https://feedback-workflow-alpha.vercel.app/](https://feedback-workflow-alpha.vercel.app/)
+
+Hosted on **Vercel**.
+
+---
+
+## 🧰 Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Database:** MongoDB (via Mongoose)
+- **Email Service:** EmailJS
+- **UI Components:** shadcn/ui + Tailwind CSS
+- **Hosting:** Vercel
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/<your-username>/feedback-workflow.git
+cd feedback-workflow
+````
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Create Environment File
+
+Create a new file named `.env.local` in the root directory and add:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+EMAILJS_SERVICE_ID=your_emailjs_service_id
+EMAILJS_TEMPLATE_ID=your_emailjs_template_id
+EMAILJS_PUBLIC_KEY=your_emailjs_public_key
+NEXT_PUBLIC_APP_URL=https://feedback-workflow-alpha.vercel.app
+```
+
+> ⚠️ For local development, use `NEXT_PUBLIC_APP_URL=http://localhost:3000`.
+
+### 4. Run the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧪 Demo Credentials
 
-## Learn More
+**HR User (existing record in MongoDB):**
 
-To learn more about Next.js, take a look at the following resources:
+```
+Email: ashitoshambilwade1289@gmail.com
+Password: Ashitosh
+Role: HR
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Sample Feedback Record:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+_id: 6909dc0c9850464f397cdbe3
+HR Email: ashitoshambilwade1289@gmail.com
+Client Email: kajalambilwade231@gmail.com
+Client Name: Ashitosh
+Token: cca1c526-b6ab-4143-b1f7-8aed27e5e21b
+Status: submitted
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📧 Email API Setup (EmailJS)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Go to [https://www.emailjs.com/](https://www.emailjs.com/).
+2. Create a free account.
+3. Set up:
+
+   * **Email Service ID**
+   * **Template ID**
+   * **Public Key**
+4. Add these values to your `.env.local` file.
+5. In your EmailJS template, include placeholders:
+
+   * `client_name`
+   * `client_email`
+   * `feedback_link`
+
+---
+
+## 📂 Folder Structure
+
+```
+📦 feedback-workflow
+├── app/
+│   ├── api/              # API routes (Mongo, EmailJS, etc.)
+│   ├── dashboard/        # HR dashboard pages
+│   ├── feedback/         # Feedback submission pages
+│   └── layout.tsx        # App layout
+├── components/           # Reusable UI components
+├── lib/                  # Utilities (DB connect, email helpers, etc.)
+├── public/               # Static assets
+├── .env.local.example    # Example environment file
+├── package.json
+└── README.md
+```
+
+---
+
+## 🧩 Key Features
+
+✅ Secure, token-based feedback submission
+✅ Email-based feedback requests (EmailJS)
+✅ HR dashboard for managing requests and responses
+✅ MongoDB data persistence
+✅ Clean modern UI (shadcn/ui + Tailwind CSS)
+✅ Fully deployed and live on Vercel
+
+---
+
+## 🧑‍💻 Developer
+
+**Developed by:** Ashitosh Vilas Ambilwade
+
+---
+
+## 📄 License
+
+This project is open-source and free to use for educational or portfolio purposes.
+
+---
+
+```
+
